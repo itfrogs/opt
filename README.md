@@ -31,12 +31,12 @@ Webasyst Shop-Script plugin
     Set up plugin settings:
 </p>
 <p>
-    <img src="/wa-data/public/site/img/plugin-settings-3.png">
+    <img src="http://docs.itfrogs.ru/wa-data/public/site/img/plugin-settings-3.png">
 </p>
 <p>
     Go to the Edit Product section and you will see that you can now edit the prices for each of the selected categories of users.
 </p>
 <p>
-    <img src="/wa-data/public/site/img/edit-product.png">
+    <img src="http://docs.itfrogs.ru/wa-data/public/site/img/edit-product.png">
 </p>
 
