@@ -11086,3 +11086,11 @@ msgstr ""
 #: /wa-apps/shop/plugins/opt/lib/config/plugin.php:4
 msgid "Allows you to assign products wholesale price."
 msgstr ""
+
+#: /wa-apps/shop/plugins/opt/lib/config/settings.php:20
+msgid "Binding stocks to the settlements"
+msgstr ""
+
+#: /wa-apps/shop/plugins/opt/lib/config/settings.php:21
+msgid "Set the binding stocks to the settlements."
+msgstr ""

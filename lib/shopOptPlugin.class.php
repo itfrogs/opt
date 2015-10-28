@@ -126,9 +126,6 @@ class shopOptPlugin extends shopPlugin
         $plugin = self::getPlugin();
         $settlements = self::getSettlements();
         $settings = $plugin->getSettings();
-        print '<pre>';
-        var_dump(wa()->getSetting('limit_main_stock'));
-        print '</pre>';
         $stocks_model = new shopStockModel();
         $stocks = $stocks_model->getAll();
 

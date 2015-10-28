@@ -15,7 +15,7 @@ Webasyst Shop-Script plugin
     Add plugin id to configuration file wa-config/apps/shop/plugins.php in the form of a line shown below:
 </p>
 <p>
-    'tocheckout' => true,
+    'opt' => true,
 </p>
 <p>
     Clear cache in Installer.
