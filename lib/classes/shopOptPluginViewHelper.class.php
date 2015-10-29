@@ -73,4 +73,20 @@ class shopOptPluginViewHelper extends waViewHelper
         $opm = new shopOptPricesModel();
         return $opm->isUserPriceBySkuId($sku_id);
     }
+
+    public static function isStockEnable($stock_id) {
+        $current_settlement = rtrim(wa()->getRouting()->getDomain() . '/' . wa()->getRouting()->getRoute('url'), '/*');
+        $plugin = self::getPlugin();
+        $settings = $plugin->getSettings();
+        if (isset($settings['stocks'][$current_settlement])) {
+            $stocks = $settings['stocks'][$current_settlement];
+        }
+        else $stocks = array();
+
+        foreach ($stocks as $key => $stock) {
+            $id = ltrim($key, 'id-');
+            if ($id == $stock_id) return true;
+        }
+        return false;
+    }
 }

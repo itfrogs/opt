@@ -11,12 +11,39 @@ class shopOptPluginFrontendCartSaveController extends waJsonController
 
         $is_html = waRequest::request('html');
         if ($q = waRequest::post('quantity', 0, 'int')) {
+
+            /*********************************************************************
+             * Определяем текущее поселение и настройки складов для него
+             */
+            $current_settlement = rtrim(wa()->getRouting()->getDomain() . '/' . wa()->getRouting()->getRoute('url'), '/*');
+            /**
+             * @var shopOptPlugin $plugin
+             */
+            $plugin = wa()->getPlugin('opt');
+            $settings = $plugin->getSettings();
+            if (isset($settings['stocks'][$current_settlement])) {
+                $stocks = $settings['stocks'][$current_settlement];
+            }
+            else $stocks = array();
+
             if (!wa()->getSetting('ignore_stock_count')) {
                 if ($item['type'] == 'product') {
                     $product_model = new shopProductModel();
                     $p = $product_model->getById($item['product_id']);
                     $sku_model = new shopProductSkusModel();
                     $sku = $sku_model->getById($item['sku_id']);
+
+                    // сумма на складах, указанных в настройках плагина
+                    if (!empty($stocks)) {
+                        $product_stocks_model = new shopProductStocksModel();
+                        $sku['count'] = 0;
+                        foreach ($stocks as $key => $stock) {
+                            $stock_id = ltrim($key, 'id-');
+                            $row = $product_stocks_model->getByField(array('sku_id' => $sku['id'], 'stock_id' => $stock_id));
+                            $sku['count'] += $row['count'];
+                        }
+                    }
+
                     // check quantity
                     if ($sku['count'] !== null && $q > $sku['count']) {
                         $q = $sku['count'];
@@ -29,6 +56,7 @@ class shopOptPluginFrontendCartSaveController extends waJsonController
                     }
                 }
             }
+
             $cart->setQuantity($item_id, $q);
             $itemTotal = $cart->getItemTotal($item_id);
             $this->response['item_total'] = $is_html ?
