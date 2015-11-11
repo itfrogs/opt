@@ -437,7 +437,7 @@ class shopOptPluginFrontendCheckoutAction extends waViewAction
             self::$steps[$step_id] = new $class_name();
         }
         
-        if($step_id  == 'confirmation' || $step_id  == 'payment') {
+        if($step_id  == 'confirmation') {
             $class_name = 'shopOptPluginCheckout'.ucfirst($step_id);
             self::$steps[$step_id] = new $class_name;
         }
