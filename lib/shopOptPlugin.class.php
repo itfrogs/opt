@@ -168,14 +168,34 @@ class shopOptPlugin extends shopPlugin
         $domain_routes = $routing->getByApp('shop');
         foreach ($domain_routes as $domain => $routes) {
             foreach ($routes as $route) {
-                $routing->setRoute($route, $domain);
-                $settlement = wa()->getRouteUrl('/frontend/product', array('product_url' => false), true);
-                $settlement = rtrim($settlement, '/');
+                $settlement = $domain.'/'.$route['url'];
+                $settlement = rtrim($settlement, '/*');
                 $settlement = ltrim($settlement, 'http://');
                 $settlement = ltrim($settlement, 'https://');
                 $settlements[] = $settlement;
             }
         }
         return $settlements;
+    }
+
+    public function productSave($product) {
+        $opm = new shopOptPricesModel();
+        foreach ($product['data']['skus'] as $sku) {
+            if (isset($sku['optprice'])) {
+                foreach ($sku['optprice'] as $key => $value) {
+                    $data = array(
+                        'id' => $value['id'],
+                        'user_category_id' => $key,
+                        'product_id' => $product['data']['id'],
+                        'sku_id' => $sku['id'],
+                        'price' => $value['price'],
+                    );
+                    if ($value['id'] > 0) {
+                        unset($data['id']);
+                    }
+                    $opm->save($data);
+                }
+            }
+        }
     }
 }
