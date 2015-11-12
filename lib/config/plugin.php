@@ -13,5 +13,6 @@ return array (
             'cart_delete'           => 'cartDelete',
             'backend_product'       => 'backendProduct',
             'product_save'          => 'productSave',
+            'frontend_product'      => 'frontendProduct',
         ),
 );

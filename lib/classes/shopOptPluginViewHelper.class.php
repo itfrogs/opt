@@ -89,4 +89,9 @@ class shopOptPluginViewHelper extends waViewHelper
         }
         return false;
     }
+
+    public static function getPricesByproductId($product_id) {
+        $opm = new shopOptPricesModel();
+        return $opm->getPricesByproductId($product_id);
+    }
 }

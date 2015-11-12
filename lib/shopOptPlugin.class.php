@@ -198,4 +198,34 @@ class shopOptPlugin extends shopPlugin
             }
         }
     }
+
+    public function frontendProduct($product) {
+        $view = self::getView();
+        $plugin = self::getPlugin();
+        $settings = $plugin->getSettings();
+
+        if ($settings['enable_product_template']) {
+            $user = wa()->getUser();
+            $cc = new waContactCategoriesModel();
+            if (!$user->getId()) {
+                $categories = array();
+            }
+            else {
+                $categories = $cc->getContactCategories($user->getId());
+            }
+
+            $cats = array();
+            foreach ($categories as $i => $category) {
+                $cats[] =  $category['id'];
+            }
+
+            $view->assign('cat_ids', $cats);
+            $view->assign('categories', $categories);
+            $view->assign('product', $product);
+            $view->assign('settings', $settings);
+            return array(
+                'block' => $view->fetch($plugin->path . '/templates/Product.html'),
+            );
+        }
+    }
 }

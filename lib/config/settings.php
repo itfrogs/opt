@@ -21,4 +21,9 @@ return array(
         'description'   => _wp('Set the binding stocks to the settlements.'),
         'control_type' => waHtmlControl::CUSTOM . ' ' . 'shopOptPlugin::stocksControl',
     ),
+    'enable_product_template'   => array(
+        'title'         => _wp('Include an additional template in the product'),
+        'description'   => _wp('Check to include an additional product template.'),
+        'control_type'  => waHtmlControl::CHECKBOX,
+    ),
 );

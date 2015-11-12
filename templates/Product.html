@@ -1,0 +1,54 @@
+{$prices = shopOptPluginViewHelper::getPricesByproductId($product.id)}
+
+<table>
+    <tr>
+        <td>
+            Prodict ID:
+        </td>
+        <td>
+            {$product.id}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            SKUS:
+        </td>
+        <td>
+            {*$product.skus|var_dump*}
+                <table>
+
+                    {foreach $product.skus as $sku}
+                        <tr>
+                            <td>
+                                {$sku.id}
+                            </td>
+                            <td>{$sku.sku}</td>
+                            <td>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Original price:
+                                        </td>
+                                        <td>
+                                            <span  style="{if empty($cats)}color: red;{/if}" >{$sku.price}</span>
+                                        </td>
+                                    </tr>
+                                    {foreach $prices[$sku.id] as $price}
+                                        <tr>
+                                            <td>
+                                                {$price.name}:
+                                            </td>
+                                            <td>
+                                                <span style="{if in_array($price.user_category_id, $cats)}color: red;{/if}">{$price.price}</span>
+                                            </td>
+                                        </tr>
+                                    {/foreach}
+                                </table>
+                            </td>
+                        </tr>
+                    {/foreach}
+                </table>
+        </td>
+    </tr>
+</table>
