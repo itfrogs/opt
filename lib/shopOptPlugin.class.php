@@ -26,27 +26,6 @@ class shopOptPlugin extends shopPlugin
         return self::$plugin;
     }
 
-    public function orderCreate($data){
-        $code = waRequest::cookie('shop_cart');
-        if (!empty($code)) {
-            $oim = new shopOrderItemsModel();
-            $om = new shopOrderModel();
-            $order = $om->getById($data['order_id']);
-            $opm = new shopOptPricesModel();
-            $items = $oim->getItems($data['order_id']);
-            $order_total = 0;
-            foreach ($items as $item) {
-                $item['price'] = $opm->getUserPriceBySkuId($item['sku_id']);
-                $oim->updateById($item['id'], $item);
-                $order_total += $item['price'] * $item['quantity'];
-            }
-            $order['total'] = $order_total;
-            $om->updateById($data['order_id'], $order);
-            return true;
-        }
-        else return false;
-    }
-
     /**
      * @var shopProduct $product
      */

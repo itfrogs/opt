@@ -9,7 +9,6 @@ return array (
     'frontend' => true,
     'handlers' =>
         array (
-            'order_action.create'   => 'orderCreate',
             'cart_delete'           => 'cartDelete',
             'backend_product'       => 'backendProduct',
             'product_save'          => 'productSave',

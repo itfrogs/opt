@@ -126,7 +126,13 @@ class shopOptCartItemsModel extends shopCartItemsModel
                         continue;
                     }
                     $sku = $skus[$item['sku_id']];
+
+                    /*************************************************************************
+                     * Заменяем цену
+                     *************************************************************************/
                     $sku['price'] = shopOptPluginViewHelper::getUserPrice($item['sku_id']);
+                    //************************************************************************
+
                     $item['product']['price'] = $sku['price'];
 
                     // Use SKU image instead of product image if specified

@@ -265,6 +265,7 @@ class shopOptPluginFrontendCheckoutAction extends waViewAction
             unset($item['id']);
             unset($item['parent_id']);
         }
+
         unset($item);
 
         $order = array(
