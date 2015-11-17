@@ -94,4 +94,38 @@ class shopOptPluginViewHelper extends waViewHelper
         $opm = new shopOptPricesModel();
         return $opm->getPricesByproductId($product_id);
     }
+
+    public static function calculateQuantity($sku) {
+        /*********************************************************************
+         * Определяем текущее поселение и настройки складов для него
+         */
+        $current_settlement = rtrim(wa()->getRouting()->getDomain() . '/' . wa()->getRouting()->getRoute('url'), '/*');
+        /**
+         * @var shopOptPlugin $plugin
+         */
+        $plugin = wa()->getPlugin('opt');
+        $settings = $plugin->getSettings();
+        if (isset($settings['stocks'][$current_settlement])) {
+            $stocks = $settings['stocks'][$current_settlement];
+        }
+        else $stocks = array();
+
+        // check quantity
+        if (!wa()->getSetting('ignore_stock_count')) {
+            // limit by main stock
+            if (!empty($stocks)) {
+                $product_stocks_model = new shopProductStocksModel();
+                $sku['count'] = 0;
+                foreach ($stocks as $key => $stock) {
+                    $stock_id = ltrim($key, 'id-');
+                    $row = $product_stocks_model->getByField(array(
+                        'sku_id' => $sku['id'],
+                        'stock_id' => $stock_id
+                    ));
+                    $sku['count'] += $row['count'];
+                }
+            }
+        }
+        return $sku;
+    }
 }
