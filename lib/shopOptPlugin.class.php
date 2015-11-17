@@ -169,7 +169,7 @@ class shopOptPlugin extends shopPlugin
                         'sku_id' => $sku['id'],
                         'price' => $value['price'],
                     );
-                    if ($value['id'] > 0) {
+                    if ($value['id'] <= 0) {
                         unset($data['id']);
                     }
                     $opm->save($data);

@@ -48,7 +48,6 @@
                             append += '<br />' +
                                 ' <label>' + self.categories[key].name + '<br />' +
                                 ' <input class="optInput" type="text" value="'+value+'" name="skus['+sku_id+'][optprice]['+self.categories[key].id+'][price]"' +
-                                ' <input class="optInput" type="hidden" value="'+id+'" name="skus['+sku_id+'][optprice]['+self.categories[key].id+'][id]"' +
                                 ' data-id="'+ id +'" ' +
                                 ' data-usercategory="'+ self.categories[key].id +'" ' +
                                 ' data-product_id="'+self.product['id']+'" ' +
@@ -56,6 +55,7 @@
 //                                ' onchange="$.Opt.priceChange(this)" ' +
                                 ' />' +
                                 '</label>' +
+                                ' <input class="optInput" type="hidden" value="'+id+'" name="skus['+sku_id+'][optprice]['+self.categories[key].id+'][id]" />' +
                                 '';
                         }
                         $(this).find('.s-price').append(append);
