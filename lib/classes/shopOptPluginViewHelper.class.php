@@ -168,4 +168,54 @@ class shopOptPluginViewHelper extends waViewHelper
         }
 
     }
+
+    public static function getQuantityByProductId($product_id) {
+        /*********************************************************************
+         * Определяем текущее поселение и настройки складов для него
+         */
+        $current_settlement = rtrim(wa()->getRouting()->getDomain() . '/' . wa()->getRouting()->getRoute('url'), '/*');
+        /**
+         * @var shopOptPlugin $plugin
+         */
+        $plugin = wa()->getPlugin('opt');
+        $settings = $plugin->getSettings();
+        if (isset($settings['stocks'][$current_settlement])) {
+            $stocks = $settings['stocks'][$current_settlement];
+        }
+        else $stocks = array();
+
+        // check quantity
+        if (!wa()->getSetting('ignore_stock_count')) {
+
+            $product = new shopProduct($product_id);
+            $count = 0;
+
+            // limit by main stock
+            if (!empty($stocks)) {
+                foreach ($product['skus'] as $sku) {
+                    $product_stocks_model = new shopProductStocksModel();
+                    $sku['count'] = 0;
+                    foreach ($stocks as $key => $stock) {
+                        $stock_id = ltrim($key, 'id-');
+                        $row = $product_stocks_model->getByField(array(
+                            'sku_id' => $sku['id'],
+                            'stock_id' => $stock_id
+                        ));
+                        $sku['count'] += $row['count'];
+                    }
+                    $count += $sku['count'];
+                }
+            }
+            else {
+                foreach ($product['skus'] as $sku) {
+                    $count += $sku['count'];
+                }
+            }
+            return $count;
+        }
+        else {
+            return false;
+        }
+
+    }
 }
