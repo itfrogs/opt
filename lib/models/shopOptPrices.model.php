@@ -22,7 +22,7 @@ class shopOptPricesModel extends waModel {
 
     public function getPricesByproductId($product_id) {
         //$results = $this->getByField('product_id', $product_id, true);
-        $results = $this->query('SELECT o.*, c.name FROM '.$this->table.' o JOIN wa_contact_category c ON o.user_category_id = c.id');
+        $results = $this->query('SELECT o.*, c.name FROM '.$this->table.' o JOIN wa_contact_category c ON o.user_category_id = c.id ORDER BY c.id');
         $prices = array();
         foreach ($results as $price) {
             /*
