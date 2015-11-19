@@ -198,11 +198,6 @@ class shopOptPlugin extends shopPlugin
                 $cats[] =  $category['id'];
             }
 
-            print '<pre>';
-            var_dump($categories);
-            print '</pre>';
-
-
             $view->assign('cat_ids', $cats);
             $view->assign('categories', $categories);
             $view->assign('product', $product);
