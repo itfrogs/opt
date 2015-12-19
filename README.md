@@ -9,7 +9,7 @@ Webasyst Shop-Script plugin
 
 # Documentation
 <p>
-    <a href="http://docs.itfrogs.ru/webasyst/plugins/shopscript/opt/" target="_blank">Russian Documentation</a>
+    <a href="http://docs.itfrogs.ru/webasyst/plugins/shopscript/opt-old/" target="_blank">Russian Documentation</a>
 </p>
 
 # Installing a plugin
